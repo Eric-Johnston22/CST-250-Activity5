@@ -176,7 +176,7 @@
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonStart);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Whack-a-mole";
             this.Click += new System.EventHandler(this.Form1_Click);
             this.ResumeLayout(false);
             this.PerformLayout();

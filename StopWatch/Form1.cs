@@ -22,7 +22,6 @@ namespace StopWatch
             watch.Start();
             timer1.Enabled = true;
             buttonTarget.Visible = true;
-            label2.Text = "Hits: 0";
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
@@ -38,6 +37,7 @@ namespace StopWatch
             hits = 0;
             lives = 3;
             label1.Text = "Timer: 0";
+            label2.Text = "Hits: 0";
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -45,17 +45,17 @@ namespace StopWatch
             label1.Text = "Timer: " + watch.Elapsed.TotalSeconds.ToString("F0");
             label3.Text = "Lives: " + lives;
 
-
+            // The following if statements increase difficulty every 15 seconds
             if (int.Parse(watch.Elapsed.TotalSeconds.ToString("F0")) > 45)
             {
-                if (random.Next(0, 10) > 6)
+                if (random.Next(0, 10) >= 6)
                 {
                     buttonTarget.Left = random.Next(0, this.Width);
                     buttonTarget.Top = random.Next(0, this.Height);
                     buttonTarget.Visible = true;
                     btnFalse.Visible = false;
                 }
-                if (random.Next(0, 10) <= 6)
+                if (random.Next(0, 10) < 5)
                 {
                     btnFalse.Left = random.Next(0, this.Width);
                     btnFalse.Top = random.Next(0, this.Height);
@@ -73,7 +73,7 @@ namespace StopWatch
                     buttonTarget.Visible = true;
                     btnFalse.Visible = false;
                 }
-                if (random.Next(0, 10) < 5)
+                if (random.Next(0, 10) < 4)
                 {
                     btnFalse.Left = random.Next(0, this.Width);
                     btnFalse.Top = random.Next(0, this.Height);
@@ -84,14 +84,14 @@ namespace StopWatch
 
             else if (int.Parse(watch.Elapsed.TotalSeconds.ToString("F0")) > 15)
             {
-                if(random.Next(0, 10) >= 5)
+                if(random.Next(0, 10) >= 3)
                 {
                     buttonTarget.Left = random.Next(0, this.Width);
                     buttonTarget.Top = random.Next(0, this.Height);
                     buttonTarget.Visible = true;
                     btnFalse.Visible = false;
                 }
-                if (random.Next(0, 10) <= 3)
+                if (random.Next(0, 10) < 3)
                 {
                     btnFalse.Left = random.Next(0, this.Width);
                     btnFalse.Top = random.Next(0, this.Height);
@@ -101,7 +101,7 @@ namespace StopWatch
             }
             else if (int.Parse(watch.Elapsed.TotalSeconds.ToString("F0")) >= 0)
             {
-                if (random.Next(0, 10) >= 5)
+                if (random.Next(0, 10) >= 2)
                 {
                     buttonTarget.Left = random.Next(0, this.Width);
                     buttonTarget.Top = random.Next(0, this.Height);
@@ -117,6 +117,7 @@ namespace StopWatch
                 }
             }
 
+            // Reset button visibility
             if (gameEnd())
             {
                 btnPlayAgain.Visible = true;
@@ -133,11 +134,14 @@ namespace StopWatch
             buttonTarget.Visible = false;
             hits++;
             hitStreak++;
-            if (hitStreak == 10)
+
+            // Every hitstreak of 10 gains the player a life
+            if (hitStreak % 10 == 0)
             {
                 lives = lives + 1;
                 hitStreak = 0;
             }
+
             label2.Text = "Hits: " + hits;
         }
 
@@ -214,11 +218,13 @@ namespace StopWatch
             label2.Text = "Hits: 0";
         }
 
+        // Close application if quit butting clicked
         private void btnQuit_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        // False button click removes life and resets hitStreak to 0
         private void btnFalse_Click(object sender, EventArgs e)
         {
             lives--;
